@@ -18,6 +18,8 @@ at anytime.
 
 ### Fixed
   * peer_port is settable using `settings_set`
+  * Fix error when resolving an integer
+  *
 
 ### Deprecated
   *

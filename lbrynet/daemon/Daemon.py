@@ -688,7 +688,7 @@ class Daemon(AuthJSONRPCServer):
             force_refresh: if True, always go out to the blockchain to resolve.
         """
 
-        parsed = parse_lbry_uri(name)
+        parsed = parse_lbry_uri(str(name))
         resolution = yield self.session.wallet.resolve(parsed.name, check_cache=not force_refresh)
         if parsed.name in resolution:
             result = resolution[parsed.name]
@@ -1341,6 +1341,7 @@ class Daemon(AuthJSONRPCServer):
                 'supports': (list) list of supports associated with claim
             }
         """
+
         try:
             if claim_id:
                 claim_results = yield self.session.wallet.get_claim(claim_id)
@@ -1429,6 +1430,7 @@ class Daemon(AuthJSONRPCServer):
 
         valid_uris = tuple()
         for u in uris:
+            u = str(u)
             try:
                 parse_lbry_uri(u)
                 valid_uris += (u, )
@@ -1483,6 +1485,7 @@ class Daemon(AuthJSONRPCServer):
         """
 
         timeout = timeout if timeout is not None else self.download_timeout
+        uri = str(uri)
 
         resolved_result = yield self.session.wallet.resolve(uri)
         if resolved_result and uri in resolved_result:
