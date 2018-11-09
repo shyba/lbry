@@ -1,0 +1,13 @@
+windows_dockerized:
+    # Use the OverlayFS driver for improved performance.
+    variables:
+        DOCKER_DRIVER: overlay
+    services:
+        - docker:dind
+    image: gitlab/dind
+    script:
+        - docker pull cdrx/pyinstaller-windows:python3-32bit
+        - docker run -v "$(pwd):/src/lbry" cdrx/pyinstaller-windows:python3-32bit lbry/scripts/wine_build.sh
+        - sudo apt update
+        - sudo apt install zip -qy
+        - sudo zip -j dist/lbrynet-windows.zip dist/lbrynet.exe
