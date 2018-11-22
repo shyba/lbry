@@ -14,7 +14,8 @@
 
 
 windows_build:
-	tags: windows
+	tags:
+        - windows
 	script:
 		- git clone https://github.com/lbryio/torba.git --depth 1
 		- sed -i -e "s/'plyvel',//" torba/setup.py
